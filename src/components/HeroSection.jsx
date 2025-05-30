@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
-
+import Link from 'next/link';
 const HeroSection = () => {
   return (
     <section className="min-h-screen flex items-center relative overflow-hidden bg-white dark:bg-gray-900">
@@ -42,21 +42,23 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
+          <Link href="/projects">
             <Button 
               className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-700 dark:to-purple-700 text-white px-8 py-6 text-lg font-medium rounded-xl
                         hover:from-purple-600 hover:to-blue-600 dark:hover:from-purple-700 dark:hover:to-blue-700 
-                        transition-all duration-300 shadow-xl hover:shadow-2xl"
+                        transition-all duration-300  hover:shadow-2xl"
             >
               Explore My Work
             </Button>
-            <Button 
+            </Link>
+            {/* <Button 
               variant="outline"
               className="border-1  border-gray-300 text-gray-800 bg-transparent dark:text-gray-300 px-8 py-6 text-lg font-medium rounded-xl
                     
                         transition-all duration-300  hover:shadow-sm hover:bg-gray-300 hover:dark:bg-gray-800"
             >
               Schedule Consultation
-            </Button>
+            </Button> */}
           </motion.div>
         </motion.div>
 

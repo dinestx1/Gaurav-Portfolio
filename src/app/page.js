@@ -5,7 +5,6 @@ import GallerySection from "@/components/GallerySection";
 import HeroSection from "@/components/HeroSection";
 import ProjectsSection from "@/components/ProjectsSection";
 
-import { motion } from "framer-motion";
 
 
 export default function Home() {
