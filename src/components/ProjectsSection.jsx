@@ -103,7 +103,7 @@ const ProjectsSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-6 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
           {projects.slice(0, showMore ? 4 : 2).map((project, i) => (
             <motion.div
               key={project.id}

@@ -90,7 +90,7 @@ const ProjectsPage = () => {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="space-y-6 grid grid-cols-2 gap-6"
+              className="space-y-6 grid grid-cols-1 lg:grid-cols-2 gap-6"
             >
               {projects.map((project) => (
                 <motion.div key={project.id} variants={itemVariants}>

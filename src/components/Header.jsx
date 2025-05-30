@@ -144,14 +144,14 @@ const Header = () => {
               </button>
 
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item}
-                  href={`#${item.toLowerCase()}`}
+                  href={`/${item.toLowerCase()}`}
                   className="block py-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 font-medium"
                   onClick={() => setIsMobileOpen(false)}
                 >
                   {item}
-                </a>
+                </Link>
               ))}
               <Button 
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white mt-4 dark:from-blue-700 dark:to-purple-700"
