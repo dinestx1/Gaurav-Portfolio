@@ -64,45 +64,44 @@ const HeroSection = () => {
 
         {/* Image Container */}
         <motion.div 
-  className="lg:w-1/2 relative h-[80vh] flex items-end justify-center lg:justify-end mt-16 lg:mt-0"
-  initial={{ opacity: 0, x: 50 }}
-  animate={{ opacity: 1, x: 0 }}
-  transition={{ duration: 0.8, delay: 0.2 }}
->
-  <div className="absolute bottom-0 right-0 h-full w-full max-w-2xl">
+    className="relative mx-auto h-[50vh] sm:h-[60vh] lg:h-[80vh] max-w-2xl flex items-center justify-center mt-8 lg:mt-0"
+    initial={{ opacity: 0, x: 50 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.8, delay: 0.2 }}
+  >
     {/* Image Container */}
     <div className="relative h-full w-full group">
+      {/* Responsive Image */}
       <img 
         src="gourav.png" 
         alt="Professional Portrait" 
-        className="h-full w-full object-cover object-bottom rounded-tl-[4rem] rounded-tr-[4rem] 
-                  border-8 border-white/40 dark:border-gray-800/30 shadow-2xl hover:shadow-3xl 
-                  transition-all duration-300 group-hover:scale-[1.01]"
+        className="h-full w-full object-cover object-center lg:object-bottom rounded-tl-[3rem] rounded-tr-[3rem] 
+                  sm:rounded-tl-[4rem] sm:rounded-tr-[4rem] border-4 sm:border-8 border-white/40 
+                  dark:border-gray-800/30 shadow-lg sm:shadow-2xl hover:shadow-3xl transition-all 
+                  duration-300 group-hover:scale-[1.01]"
         style={{ 
           maskImage: 'linear-gradient(to bottom, black 85%, transparent 98%)',
           WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 98%)'
         }}
       />
- 
-      {/* Floating Particles */}
+      
+      {/* Floating Particles - Optimized for Performance */}
       <div className="absolute inset-0 opacity-20 dark:opacity-30 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(10)].map((_, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 bg-gray-600 dark:bg-gray-300 rounded-full animate-float"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.5}s`
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: `${Math.random() * 10 + 15}s`
             }}
           />
         ))}
       </div>
     </div>
-
-
-  </div>
-</motion.div>
+  </motion.div>
       </div>
 
       {/* Grid Overlay */}
