@@ -1,30 +1,12 @@
 // auth.js
 const bcrypt = require('bcrypt');
 const db = require('../models');
-const { Op } = require("sequelize");
-
 const crypto = require('crypto');
 
 
 
-// Function to handle user login
-// const login = async (req, res) => {
-//     const { email, password } = req.body || {};
-
-//     db.query('SELECT * FROM admin WHERE email = ?', [email], async (err, results) => {
-//         if (err) return res.status(500).send('Error during login');
-//         if (results.length === 0) return res.status(401).send('User not found');
-
-//         const user = results[0];
-//         const match = await bcrypt.compare(password, user.password);
-//         if (!match) return res.status(401).send('Invalid credentials');
-
-//         res.send('Login successful');
-//     });
-// };
-
 const login = async (req, res) => {
-  const { email, phone, password } = req.body || {};
+  const { email, password } = req.body || {};
 
   try {
     const user = await db.Admin.findOne({
@@ -70,12 +52,7 @@ const registration = async (req, res) => {
 
     // Check for existing user
     const exUser = await db.Admin.findOne({
-      where: {
-        [Op.or]: [
-          { email },
-          { phone }
-        ]
-      }
+      where: { email }
     });
 
     if (exUser) {
@@ -122,5 +99,41 @@ const registration = async (req, res) => {
   }
 };
 
-module.exports = { login, registration };
-// module.exports = login;
+
+
+const updateAdmin = async (req, res) => {
+  const { email, updateEmail, name, phone, bio, profile, address, linkedin } = req.body;
+
+  try {
+    const exUser = await db.Admin.findOne({ where: { email } });
+
+    if (!exUser) {
+      return res.status(404).json({
+        error: "User not found",
+        message: 'No admin found with this email.'
+      });
+    }
+
+    await exUser.update({
+      email: updateEmail || exUser.email,
+      displayName: name || exUser.displayName,
+      phone,
+      bio,
+      profilePicture: profile,
+      address,
+      linkedinProfile: linkedin
+    });
+
+    return res.status(200).json({
+      message: 'Admin profile updated successfully',
+      admin: exUser
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+module.exports = { login, registration, updateAdmin };

@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post('/auth/login', authController.login);
 router.post('/auth/register', authController.registration);
+router.post('/update-profile',authController.updateAdmin);
 
 
 // PROJECT

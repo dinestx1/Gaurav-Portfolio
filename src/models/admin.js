@@ -39,13 +39,5 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true
         },
     });
-
-    //  Admin.associate = (model) =>{
-    //     Admin.hasMany(model.ResearchPaper,{
-    //         foreignKey: 'adminId',
-    //         as: 'papers'
-    //     });
-    //  }
-
     return Admin;
 };

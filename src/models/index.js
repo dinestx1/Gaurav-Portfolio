@@ -23,6 +23,11 @@ db.WorkExperience = require('./workExperience')(sequelize, DataTypes);
 db.Project = require('./project')(sequelize, DataTypes);
 
 
+// Admin
+// Admin.hasOne(Admin, { foreignKey: 'adminId' });
+// Admin.belongsTo(Admin, { foreignKey: 'adminId' });
+
+
 // Set up associations AFTER both models are defined
 db.Admin.hasMany(db.ResearchPaper, {
   foreignKey: 'adminId',
