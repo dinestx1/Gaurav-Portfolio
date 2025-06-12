@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Roboto } from 'next/font/google'
 import ClientLayout from './clientLayout'
+import Providers from "./Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${roboto.className} bg-white`}>
+      <Providers>
         <ClientLayout>{children}</ClientLayout>
+        </Providers>
       </body>
     </html>
   )

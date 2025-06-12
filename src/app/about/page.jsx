@@ -1,59 +1,41 @@
 "use client";
 import React from 'react';
+import { useEffect,useState} from 'react';
 import { motion } from 'framer-motion';
-import { FiBriefcase, FiBook, FiUser,FiUsers, FiAward, FiStar, FiChevronRight } from 'react-icons/fi';
+import * as FiIcons from "react-icons/fi";
 
+import { FiBriefcase, FiBook, FiUser,FiUsers, FiAward, FiStar, FiChevronRight } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getWorks } from '@/store/slices/authSlice';
 const AboutPage = () => {
-  const experiences = [
-    {
-      title: "Founder & Managing Partner",
-      company: "GrowthVibes Advisors LLP",
-      period: "Apr 2022 - Present",
-      icon: <FiUsers />,
-      color: "bg-blue-100",
-      achievements: [
-        "Mentored 20+ startups across international markets",
-        "Launched 3 specialized entrepreneurial programs",
-        "Conducted 15+ workshops at top institutions"
-      ]
-    },
-    {
-      title: "Head of Academics",
-      company: "ThinkStartup Learning",
-      period: "May 2022 - Present",
-      icon: <FiBook />,
-      color: "bg-purple-100",
-      achievements: [
-        "Trained 500+ students in entrepreneurial skills",
-        "Developed flagship YoungCEO Program",
-        "Organized bi-annual U18 Launchpad at IIT Delhi"
-      ]
-    },
-    {
-      title: "Senior Research Fellow",
-      company: "IIT Delhi",
-      period: "Jan 2020 - Present",
-      icon: <FiStar />,
-      color: "bg-green-100",
-      achievements: [
-        "Research on India's entrepreneurial ecosystems",
-        "Published 5+ research papers",
-        "Guest lectures on entrepreneurial management"
-      ]
-    },
-    {
-      title: "Founder & Manager",
-      company: "D&G Academy",
-      period: "Jul 2017 - Dec 2019",
-      icon: <FiAward />,
-      color: "bg-orange-100",
-      achievements: [
-        "80% success rate in competitive exams",
-        "Developed innovative teaching methodologies",
-        "Managed team of 10+ instructors"
-      ]
-    }
-  ];
+
+
+  const {works}=useSelector((state)=>state.auth);
+   
+  const dispatch =useDispatch()
+
+ console.log(works)
+  useEffect(()=>{
+   dispatch(getWorks())
+  },[dispatch])
+
+
+
+
+  const [showFull, setShowFull] = useState(false);
+
+  const toggleReadMore = () => setShowFull(!showFull);
+
+  const fullText = `I am Gourav Aggarwal, founder of The Growth Vibes, a platform dedicated to empowering entrepreneurs with comprehensive support for launching and scaling startups. With over seven years of experience in entrepreneurship, teaching, and mentorship, I guide founders in ideation, strategic planning, market research, go-to-market strategies, and growth.
+As a Senior Research Fellow at IIT Delhi’s Department of Management Studies, I research India’s entrepreneurial ecosystem to drive innovation. My Master’s in Finance and Accounting from Shri Ram College of Commerce, University of Delhi (2018), provides critical financial expertise for startups. Since founding D&G Academy in 2017, I’ve nurtured entrepreneurial talent. As a mentor with Delhi Angels Den, MicroMentor, and IIT Bombay’s e-Cell, I support aspiring entrepreneurs. Currently, as Head of Academics at ThinkStartup, I inspire school students to develop entrepreneurial skills.
+
+My mission is to build a vibrant, inclusive startup ecosystem in India, transforming ideas into impactful ventures through The Growth Vibes, research, and mentorship.`;
+
+  const shortText = fullText.slice(0, 300) + "...";
+
+
+
 
   return (
     <section className="min-h-screen bg-gray-50 py-20">
@@ -62,20 +44,20 @@ const AboutPage = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-20  mx-auto"
+          className=" mb-20  mx-auto"
         >
-          <h1 className="text-3xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
+          <h1 className="text-3xl text-center lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
           My Entrepreneurial Journey
           </h1>
-          <p className="text-md text-gray-600 leading-relaxed">
-          I am Gourav Aggarwal, founder of The Growth Vibes, a platform dedicated to empowering entrepreneurs with comprehensive support for launching and scaling startups. With over seven years of experience in entrepreneurship, teaching, and mentorship, I guide founders in ideation, strategic planning, market research, go-to-market strategies, and growth.
-
-As a Senior Research Fellow at IIT Delhi’s Department of Management Studies, I research India’s entrepreneurial ecosystem to drive innovation. My Master’s in Finance and Accounting from Shri Ram College of Commerce, University of Delhi (2018), provides critical financial expertise for startups.
-
-Since founding D&G Academy in 2017, I’ve nurtured entrepreneurial talent. As a mentor with Delhi Angels Den, MicroMentor, and IIT Bombay’s e-Cell, I support aspiring entrepreneurs. Currently, as Head of Academics at ThinkStartup, I inspire school students to develop entrepreneurial skills.
-
-My mission is to build a vibrant, inclusive startup ecosystem in India, transforming ideas into impactful ventures through The Growth Vibes, research, and mentorship.
-          </p>
+          <p className="text-md text-gray-600 leading-relaxed whitespace-pre-line">
+        {showFull ? fullText : shortText}
+      </p>
+      <button
+        onClick={toggleReadMore}
+        className="mt-2 text-blue-600 font-medium hover:underline focus:outline-none"
+      >
+        {showFull ? "Read Less" : "Read More"}
+      </button>
         </motion.div>
 
         {/* Experience Timeline */}
@@ -83,7 +65,8 @@ My mission is to build a vibrant, inclusive startup ecosystem in India, transfor
         <div className="absolute left-1/2 -translate-x-1/2 w-0.5 bg-gray-200 hidden lg:block h-full" />
           
           <div className="grid lg:grid-cols-2 lg:gap-x-12 gap-y-8">
-            {experiences.map((exp, index) => (
+            {works.map((exp, index) => (
+              
               <div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -96,20 +79,37 @@ My mission is to build a vibrant, inclusive startup ecosystem in India, transfor
                 {/* Content Card */}
                 <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
                   <div className="flex items-start gap-4 mb-3">
-                    <div className={`p-3 rounded-lg ${exp.color} flex-shrink-0`}>
-                      {React.cloneElement(exp.icon, { className: "w-5 h-5 text-gray-800" })}
+                    <div className={`p-3 rounded-lg bg-purple-200 flex-shrink-0`}>
+                      <FiBriefcase className="w-5 h-5 text-gray-800" />
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold text-gray-800">{exp.title}</h3>
                       <p className="text-sm text-gray-600 font-medium">{exp.company}</p>
-                      <p className="text-xs text-gray-400 mt-1">{exp.period}</p>
+                      <p className='flex gap-1'>
+                      <p className="text-xs text-gray-400">
+    {new Date(exp.startDate).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+    })}{" "}
+    -{" "}
+    {exp.endDate
+      ? new Date(exp.endDate).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+        })
+      : "Present"}
+  </p>
+                      <p className="text-xs text-gray-400 ">(
+  {exp.experience?.years > 0 && `${exp.experience.years} year${exp.experience.years > 1 ? 's' : ''} `}
+  {exp.experience?.months > 0 && `${exp.experience.months} month${exp.experience.months > 1 ? 's' : ''}`})
+</p></p>
                     </div>
                   </div>
 
                   <div className="pl-4 border-l-2 border-blue-100">
                     <h4 className="text-sm font-semibold text-gray-700 mb-2">Key Milestones:</h4>
                     <ul className="space-y-2 text-gray-600">
-                      {exp.achievements.map((ach, idx) => (
+                      {exp.keyMilestones.map((ach, idx) => (
                         <li key={idx} className="flex items-start gap-2 text-sm leading-snug">
                           <FiChevronRight className="text-blue-500 mt-1 flex-shrink-0 w-4 h-4" />
                           {ach}

@@ -8,6 +8,9 @@ import ProjectsSection from "@/components/ProjectsSection";
 
 
 export default function Home() {
+
+
+
   return (
     <>
     
@@ -18,7 +21,7 @@ export default function Home() {
       {/* Animated background elements */}
  
   
-<div classname="relative z-10 max-w-6xl mx-auto px-6 py-12 gap-36">
+<div className="relative z-10  mx-auto gap-36">
 
 <HeroSection/>
 

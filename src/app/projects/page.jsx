@@ -1,46 +1,25 @@
 "use client";
 import { motion } from 'framer-motion';
 import ProjectCard from '@/components/ProjectCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getPapers } from '@/store/slices/authSlice';
+
+
 
 const ProjectsPage = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "Entrepreneurial Ecosystem Health Index",
-      description: "Developing a comprehensive index to measure the health and vitality of regional entrepreneurial ecosystems using multi-criteria decision-making approaches.",
-      status: "active",
-      collaboration: "open",
-      partners: ["IIT Delhi Research Team", "Ministry of Commerce"],
-      timeline: "2023-2025"
-    },
-    {
-      id: 2,
-      title: "Startup India Impact Assessment",
-      description: "Evaluating the effectiveness of the Startup India program on entrepreneurial activity and economic development indicators across different states.",
-      status: "active",
-      collaboration: "closed",
-      partners: ["NITI Aayog", "DIPP"],
-      timeline: "2024"
-    },
-    {
-      id: 3,
-      title: "Student Entrepreneurship Portal",
-      description: "Creating a digital platform connecting student entrepreneurs with mentors, investors, and resources across Indian universities.",
-      status: "planning",
-      collaboration: "open",
-      partners: ["AICTE", "University Grants Commission"],
-      timeline: "Q3 2024"
-    },
-    {
-      id: 4,
-      title: "Digital Currency Adoption Framework",
-      description: "Developing policy recommendations for CBDC implementation in emerging economies with focus on financial inclusion.",
-      status: "completed",
-      collaboration: "closed",
-      partners: ["RBI Research Division"],
-      timeline: "2022-2023"
-    }
-  ];
+   
+   const {papers}=useSelector((state)=>state.auth);
+   
+   const dispatch =useDispatch()
+
+
+   useEffect(()=>{
+    dispatch(getPapers())
+   },[dispatch])
+
+
+  const projects = papers;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -93,7 +72,7 @@ const ProjectsPage = () => {
               className="space-y-6 grid grid-cols-1 lg:grid-cols-2 gap-6"
             >
               {projects.map((project) => (
-                <motion.div key={project.id} variants={itemVariants}>
+                <motion.div key={project.paperId} variants={itemVariants}>
                   <ProjectCard project={project} />
                 </motion.div>
               ))}

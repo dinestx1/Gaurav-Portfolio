@@ -3,17 +3,17 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { FiArrowUpRight, FiMail } from 'react-icons/fi';
-
+import { formatTimeline } from '@/lib/utils';
 const ProjectCard = ({ project }) => {
   const statusColors = {
-    active: "bg-green-100 text-green-800",
-    planning: "bg-blue-100 text-blue-800",
+    published: "bg-green-100 text-green-800",
+    draft: "bg-blue-100 text-blue-800",
     completed: "bg-gray-100 text-gray-800"
   };
 
   const statusText = {
-    active: "Active",
-    planning: "Planning",
+    published: "Published",
+    draft: "Draft",
     completed: "Completed"
   };
 
@@ -23,15 +23,15 @@ const ProjectCard = ({ project }) => {
       className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow"
     >
       <div className="flex justify-between items-start mb-3">
-        <div className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[project.status]}`}>
-          {statusText[project.status]}
+        <div className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[project.publicationStatus]}`}>
+          {statusText[project.publicationStatus]}
         </div>
         <div className={`px-2.5 py-1 rounded-full text-xs font-medium ${
-          project.collaboration === "open" 
+          project.openCollaboration === true 
             ? "bg-blue-100 text-blue-800" 
             : "bg-gray-100 text-gray-800"
         }`}>
-          {project.collaboration === "open" ? "Open for Collaboration" : "Collaboration Closed"}
+          {project.openCollaboration === true ? "Open for Collaboration" : "Collaboration Closed"}
         </div>
       </div>
       
@@ -39,7 +39,9 @@ const ProjectCard = ({ project }) => {
       <p className="text-sm text-gray-600 mb-4">{project.description}</p>
       
       <div className="mt-4 mb-6">
-        <div className="text-xs text-gray-500 mb-2">Timeline: {project.timeline}</div>
+      <div className="text-xs text-gray-500 mb-2">
+  Timeline: {formatTimeline(project.startDate, project.endDate, project.isOngoing)}
+</div>
         <div className="text-xs font-medium text-gray-700 mb-1">Partners:</div>
         <div className="flex flex-wrap gap-1.5 mt-1">
           {project.partners.map((partner, idx) => (
@@ -55,7 +57,7 @@ const ProjectCard = ({ project }) => {
 
       <div className="flex flex-wrap gap-3">
         <Link 
-          href={`/projects/${project.id}`}
+          href={`/projects/${project.paperId}`}
           className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium px-3 py-2 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors"
         >
           View Full Details
