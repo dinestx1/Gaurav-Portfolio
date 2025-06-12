@@ -11,13 +11,11 @@ const addWork = async (req, res) => {
         startDate,
         endDate,
         experience,
-        description
+        description,
+        keyMilestones
     } = req.body;
 
-    if (!title || !employmentType || !company || !startDate || !endDate || !description) {
-        console.log("Please enter all details");
-        return res.status(400).json({ error: 'Enter all required details' });
-    }
+
 
     try {
         const workId = crypto.randomBytes(16).toString('hex');
@@ -30,7 +28,8 @@ const addWork = async (req, res) => {
             startDate,
             endDate,
             experience,
-            description
+            description,
+            keyMilestones
         });
 
         // Respond with success

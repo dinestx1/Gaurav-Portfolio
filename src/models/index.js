@@ -20,7 +20,7 @@ db.sequelize = sequelize;
 db.Admin = require('./admin')(sequelize, DataTypes);
 db.ResearchPaper = require('./researchPaper')(sequelize, DataTypes);
 db.WorkExperience = require('./workExperience')(sequelize, DataTypes);
-db.Project = require('./project')(sequelize, DataTypes);
+db.eventandactivities = require('./eventandactivities')(sequelize, DataTypes);
 
 
 // Admin
@@ -49,15 +49,10 @@ db.WorkExperience.belongsTo(db.Admin, {
   as: 'admin'
 });
 
-// Project relation ✅
-db.Admin.hasMany(db.Admin, {
-  foreignKey: 'adminId',
-  as: 'Project'
-});
 
-db.Project.belongsTo(db.Admin, {
-  foreignKey: 'adminId',
-  as: 'admin'
-})
+
+
+
+
 
 module.exports = db;

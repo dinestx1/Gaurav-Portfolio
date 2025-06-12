@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         employmentType: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         company: {
             type: DataTypes.STRING,
@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATE,
             allowNull: false
         },
+        icon: {
+  type: DataTypes.STRING, // Store icon name as string (e.g., "FiBook")
+  allowNull: true
+},
         endDate: {
             type: DataTypes.DATE,
             allowNull: true
@@ -34,6 +38,11 @@ module.exports = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.TEXT,
             allowNull: true
+        },
+        keyMilestones: {
+            type: DataTypes.JSON,
+            allowNull: true,
+            defaultValue: []  // Ensures it's an empty array if not provided
         }
     });
 

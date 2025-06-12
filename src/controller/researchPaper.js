@@ -3,46 +3,72 @@ const crypto = require('crypto');
 
 const addResearch = async (req, res) => {
     try {
-        const { title, publicationStatus, publicationDate, author, description, objective, thumbnail, openCollaboration } = req.body;
-
-        if (!title || !author || !description || !objective || !openCollaboration || !publicationStatus || !publicationDate) {
-            console.log("Please enter all details");
-            return res.status(400).json({ error: 'Enter all details' });
-        }
-
-
-        const researchId = crypto.randomBytes(20).toString('hex');
-
-
-        const newResearch = await db.ResearchPaper.create({
-            paperId: researchId,
-            title,
-            publicationStatus,
-            publicationDate,
-            thumbnail,
-            author,
-            description,
-            objective,
-            openCollaboration
-        });
-        return res.status(200).json({
-            message: 'New Research Work will be added',
-            researchPaper: newResearch
-        })
+      const {
+        title,
+        publicationStatus,
+        publicationDate,
+        author,
+        description,
+        objective,
+        thumbnail,
+        openCollaboration,
+        partners,
+        resources,
+        startDate,
+        endDate,
+        isOngoing,
+        requirements,
+        contact,
+        progress,
+        funding
+      } = req.body;
+  
+      // Required fields check
+      if (!title || !description || !objective || !openCollaboration || !publicationStatus ) {
+        console.log("Please enter all required details");
+        return res.status(400).json({ error: 'Please enter all required details' });
+      }
+  
+      const researchId = crypto.randomBytes(20).toString('hex');
+  
+      const newResearch = await db.ResearchPaper.create({
+        paperId: researchId,
+        title,
+        publicationStatus,
+        publicationDate,
+        thumbnail,
+        author,
+        description,
+        objective,
+        openCollaboration,
+        partners: partners || [],
+        resources: resources || [],
+        startDate,
+        endDate,
+        isOngoing,
+        requirements: requirements || [],
+        contact,
+        progress,
+        funding: funding || { secured: "₹0", needed: "₹0" }
+      });
+  
+      return res.status(200).json({
+        message: 'New research work has been added',
+        researchPaper: newResearch
+      });
+  
     } catch (error) {
-        console.error('new reasearch creation error:', error);
-        return res.status(500).json({
-            error: 'An error occurred during creation'
-        });
+      console.error('New research creation error:', error);
+      return res.status(500).json({
+        error: 'An error occurred during creation'
+      });
     }
-}
+  };
 
 
-const fetchResearch = async (req, res) => {
+  const fetchResearch = async (req, res) => {
     try {
-        const researchPapers = await db.ResearchPaper.findAll({
-            attributes: ['paperId', 'publicationStatus', 'publicationDate','title', 'author', 'description', 'objective', 'thumbnail','openCollaboration', 'createdAt']
-        });
+        const researchPapers = await db.ResearchPaper.findAll();
 
         return res.status(200).json({
             message: 'Research papers fetched successfully',
@@ -55,6 +81,32 @@ const fetchResearch = async (req, res) => {
         });
     }
 }
+
+
+
+const fetchResearchByid = async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        const researchPaper = await db.ResearchPaper.findByPk(id);
+        
+        if (!researchPaper) {
+            return res.status(404).json({
+                error: 'Research paper not found'
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Research paper fetched successfully',
+            data: researchPaper
+        });
+    } catch (error) {
+        console.error('Error fetching research paper:', error);
+        return res.status(500).json({
+            error: 'An error occurred while fetching the research paper'
+        });
+    }
+};
 
 
 const updateResearch = async (req, res) => {
@@ -127,4 +179,4 @@ const deleteResearch = async (req, res) => {
 };
 
 
-module.exports = { addResearch, fetchResearch, updateResearch, deleteResearch};
+module.exports = { addResearch, fetchResearch,fetchResearchByid, updateResearch, deleteResearch};

@@ -2,7 +2,7 @@ const express = require('express');
 const authController = require('./controller/auth');
 const researchController = require('./controller/researchPaper');
 const workController = require('./controller/work');
-
+const eventcontroller =require('./controller/events')
 const router = express.Router();
 
 router.post('/auth/login', authController.login);
@@ -13,6 +13,7 @@ router.post('/update-profile',authController.updateAdmin);
 // PROJECT
 router.post('/add-research-paper',researchController.addResearch);
 router.get('/fetch-research-paper', researchController.fetchResearch);
+router.get('/fetch-research-paper/:id', researchController.fetchResearchByid);
 router.post('/update-research/:researchId', researchController.updateResearch);
 router.delete('/delete-research/:researchId', researchController.deleteResearch);
 
@@ -22,5 +23,12 @@ router.delete('/delete-research/:researchId', researchController.deleteResearch)
 router.post('/add-work', workController.addWork);
 router.get('/fetch-work', workController.fetchWork);
 router.post('/update-work/:workExperienceId', workController.updateWork);
+
+
+
+//event and activties
+router.post('/add-event', eventcontroller.addEventActivity);
+router.get('/fetch-event', eventcontroller.getAllEventActivities);
+
 
 module.exports = router;
