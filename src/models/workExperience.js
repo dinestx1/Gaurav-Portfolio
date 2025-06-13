@@ -24,9 +24,9 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         icon: {
-  type: DataTypes.STRING, // Store icon name as string (e.g., "FiBook")
-  allowNull: true
-},
+            type: DataTypes.STRING, // Store icon name as string (e.g., "FiBook")
+            allowNull: true
+        },
         endDate: {
             type: DataTypes.DATE,
             allowNull: true

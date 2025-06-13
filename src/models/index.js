@@ -28,7 +28,7 @@ db.eventandactivities = require('./eventandactivities')(sequelize, DataTypes);
 // Admin.belongsTo(Admin, { foreignKey: 'adminId' });
 
 
-// Set up associations AFTER both models are defined
+// Research Paper relation
 db.Admin.hasMany(db.ResearchPaper, {
   foreignKey: 'adminId',
   as: 'papers'
@@ -48,6 +48,16 @@ db.WorkExperience.belongsTo(db.Admin, {
   foreignKey: 'adminId',
   as: 'admin'
 });
+
+// Event Activity relation
+db.Admin.hasMany(db.eventandactivities,{
+  foreignKey: 'adminId',
+  as: 'Activity'
+});
+db.eventandactivities.belongsTo(db.Admin,{
+  foreignKey: 'adminId',
+  as: 'admin'
+})
 
 
 
