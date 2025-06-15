@@ -20,13 +20,24 @@ const addWork = async (req, res) => {
     try {
         const workId = crypto.randomBytes(16).toString('hex');
 
+        // Validate & parse date
+        const parsedStartDate = new Date(startDate);
+        const parsedEndDate = (!endDate || endDate === "Present") ? null : new Date(endDate);
+
+        if (
+            isNaN(parsedStartDate.getTime()) ||
+            (parsedEndDate !== null && isNaN(parsedEndDate.getTime()))
+        ) {
+            return res.status(400).json({ message: 'Invalid startDate or endDate format' });
+        }
+
         const newWork = await db.WorkExperience.create({
             workExperienceId: workId,
             title,
             employmentType,
             company,
-            startDate,
-            endDate,
+            startDate: parsedStartDate,
+            endDate: parsedEndDate,
             experience,
             description,
             keyMilestones
