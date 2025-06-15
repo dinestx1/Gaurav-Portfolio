@@ -24,11 +24,12 @@ const addResearch = async (req, res) => {
       } = req.body;
   
       // Required fields check
-      if (!title || !description || !objective || !openCollaboration || !publicationStatus ) {
+    /* if (!title || !description || !objective || !openCollaboration || !publicationStatus ) {
         console.log("Please enter all required details");
         return res.status(400).json({ error: 'Please enter all required details' });
-      }
+      }*/
   
+     
       const researchId = crypto.randomBytes(20).toString('hex');
   
       const newResearch = await db.ResearchPaper.create({
