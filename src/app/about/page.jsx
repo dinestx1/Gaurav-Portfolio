@@ -106,17 +106,20 @@ My mission is to build a vibrant, inclusive startup ecosystem in India, transfor
                     </div>
                   </div>
 
-                  <div className="pl-4 border-l-2 border-blue-100">
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Key Milestones:</h4>
-                    <ul className="space-y-2 text-gray-600">
-                      {exp?.keyMilestones?.map((ach, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm leading-snug">
-                          <FiChevronRight className="text-blue-500 mt-1 flex-shrink-0 w-4 h-4" />
-                          {ach}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {Array.isArray(exp?.keyMilestones) && exp.keyMilestones.length > 0 && (
+  <div className="pl-4 border-l-2 border-blue-100">
+    <h4 className="text-sm font-semibold text-gray-700 mb-2">Key Milestones:</h4>
+    <ul className="space-y-2 text-gray-600">
+      {exp.keyMilestones.map((ach, idx) => (
+        <li key={idx} className="flex items-start gap-2 text-sm leading-snug">
+          <FiChevronRight className="text-blue-500 mt-1 flex-shrink-0 w-4 h-4" />
+          {ach}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
                 </div>
               </div>
             ))}

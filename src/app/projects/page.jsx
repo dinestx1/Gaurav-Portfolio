@@ -60,7 +60,7 @@ const ProjectsPage = () => {
         <div className="grid   gap-8 mb-16">
     
 
-          <div className="bg-white p-8 rounded-2xl  border border-gray-100">
+          <div className="bg-white p-4 lg:p-8 rounded-2xl  border border-gray-100">
            
             <p className="text-gray-600 mb-6">
               Projects seeking academic or industry partners
