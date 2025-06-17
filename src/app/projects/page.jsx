@@ -80,7 +80,7 @@ const ProjectsPage = () => {
           </div>
         </div>
 
-        <div className="bg-white p-8 rounded-2xl  border border-gray-100">
+        {/* <div className="bg-white p-8 rounded-2xl  border border-gray-100">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Project Timeline</h2>
           <div className="relative h-2 bg-gray-200 rounded-full mb-12">
             <div className="absolute top-0 left-0 w-1/4 h-full bg-green-500 rounded-full"></div>
@@ -98,7 +98,7 @@ const ProjectsPage = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
