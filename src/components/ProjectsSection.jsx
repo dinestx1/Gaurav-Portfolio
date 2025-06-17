@@ -95,16 +95,19 @@ const ProjectsSection = () => {
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Partners:</p>
-                          <div className="mt-1 flex flex-wrap gap-1">
-                            {project.partners.map((partner, idx) => (
-                              <span 
-                                key={idx} 
-                                className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs"
-                              >
-                                {partner}
-                              </span>
-                            ))}
-                          </div>
+                          {project?.partners?.length > 0 && (
+  <div className="mt-1 flex flex-wrap gap-1">
+    {project.partners?.map((partner, idx) => (
+      <span 
+        key={idx} 
+        className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs"
+      >
+        {partner}
+      </span>
+    ))}
+  </div>
+)}
+
                         </div>
                         
                         <div>
