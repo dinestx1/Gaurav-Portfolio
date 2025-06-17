@@ -15,7 +15,7 @@ const AboutPage = () => {
    
   const dispatch =useDispatch()
 
- console.log(works)
+
   useEffect(()=>{
    dispatch(getWorks())
   },[dispatch])
@@ -65,7 +65,7 @@ My mission is to build a vibrant, inclusive startup ecosystem in India, transfor
         <div className="absolute left-1/2 -translate-x-1/2 w-0.5 bg-gray-200 hidden lg:block h-full" />
           
           <div className="grid lg:grid-cols-2 lg:gap-x-12 gap-y-8">
-            {works.map((exp, index) => (
+            {works?.map((exp, index) => (
               
               <div
                 key={index}
@@ -109,7 +109,7 @@ My mission is to build a vibrant, inclusive startup ecosystem in India, transfor
                   <div className="pl-4 border-l-2 border-blue-100">
                     <h4 className="text-sm font-semibold text-gray-700 mb-2">Key Milestones:</h4>
                     <ul className="space-y-2 text-gray-600">
-                      {exp.keyMilestones.map((ach, idx) => (
+                      {exp?.keyMilestones?.map((ach, idx) => (
                         <li key={idx} className="flex items-start gap-2 text-sm leading-snug">
                           <FiChevronRight className="text-blue-500 mt-1 flex-shrink-0 w-4 h-4" />
                           {ach}

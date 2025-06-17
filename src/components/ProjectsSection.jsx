@@ -9,8 +9,8 @@ const ProjectsSection = () => {
   const [showMore, setShowMore] = useState(false);
   
   const {papers}=useSelector((state)=>state.auth);
-
-  const projects = papers;
+  const projects = Array.isArray(papers) ? papers : [];
+  
   const cardVariants = {
     initial: { opacity: 0, y: 30 },
     animate: (i) => ({
