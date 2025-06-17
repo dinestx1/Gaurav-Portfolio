@@ -1,9 +1,10 @@
 import express, { json } from 'express';
-import routes from './src/routes.js';
+import routes from './routes.js';
 import cors from 'cors';
-import connectDB from './db.js'
-
+import connectDB from "./config/db.js"
+import dotenv from "dotenv";
 // Initialize Database Connection
+dotenv.config();
 
 // Initialize Express App
 const app = express();
@@ -13,10 +14,10 @@ app.use(cors({
   credentials:true,
   exposedHeaders:["set-cookie"]
 }))
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 
-app.use("/api/v0.1", routes);
+app.use("/api/v0.1/", routes);
 app.get("/",(req,res)=>{
   res.send({status:"started"});
 
