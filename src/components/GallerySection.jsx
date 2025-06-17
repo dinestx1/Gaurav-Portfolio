@@ -8,19 +8,19 @@ import { FaHeart,FaEye,FaShare,FaArrowRight} from 'react-icons/fa';
 const GallerySection = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const galleryImages = [
-    { 
+    { id:1,
       src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f", 
       alt: "Project Image 1", 
       title: "Research Presentation",
       category: "Academic"
     },
-    { 
+    { id:2,
       src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085", 
       alt: "Project Image 2", 
       title: "Technical Workshop",
       category: "Professional"
     },
-    { 
+    { id:3,
       src: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b", 
       alt: "Project Image 3", 
       title: "Innovation Summit",

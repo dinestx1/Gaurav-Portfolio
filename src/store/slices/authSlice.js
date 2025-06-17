@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 
-// const API_URL = "https://api.anveraesports.com/api/admin/";
-const API_URL = "https://gaurav-portfolio-c8e5.onrender.com/api/v0.1/";
+const API_URL = "http://localhost:5000/api/v0.1/";
+// const API_URL = "https://gaurav-portfolio-c8e5.onrender.com/api/v0.1/";
 
 export const getPapers = createAsyncThunk("auth/getPapers", async (_, { rejectWithValue, dispatch }) => {
     try {
