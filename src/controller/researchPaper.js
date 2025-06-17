@@ -65,45 +65,88 @@ export const addResearch = async (req, res) => {
 
   export const fetchResearch = async (req, res) => {
     try {
-        const researchPapers = await db.ResearchPaper.findAll();
-
-        return res.status(200).json({
-            message: 'Research papers fetched successfully',
-            data: researchPapers
-        });
-    } catch (error) {
-        console.error('Error fetching research papers:', error);
-        return res.status(500).json({
-            error: 'An error occurred while fetching research papers'
-        });
-    }
-}
-
-
-
-export const fetchResearchByid = async (req, res) => {
-    try {
-        const { id } = req.params;
-        
-        const researchPaper = await db.ResearchPaper.findByPk(id);
-        
-        if (!researchPaper) {
-            return res.status(404).json({
-                error: 'Research paper not found'
-            });
+      const research = await db.ResearchPaper.findAll();
+  
+      const researchPapers = research.map((paper) => {
+        const obj = paper.toJSON();
+  
+        for (const key in obj) {
+          if (typeof obj[key] === 'string') {
+            const value = obj[key].trim();
+            // Parse if it looks like an array or object
+            if (
+              (value.startsWith('{') && value.endsWith('}')) ||
+              (value.startsWith('[') && value.endsWith(']'))
+            ) {
+              try {
+                obj[key] = JSON.parse(value);
+              } catch (err) {
+                // Leave it unchanged if parsing fails
+              }
+            }
+          }
         }
-
-        return res.status(200).json({
-            message: 'Research paper fetched successfully',
-            data: researchPaper
-        });
+  
+        return obj;
+      });
+  
+      return res.status(200).json({
+        message: 'Research papers fetched successfully',
+        data: researchPapers,
+      });
     } catch (error) {
-        console.error('Error fetching research paper:', error);
-        return res.status(500).json({
-            error: 'An error occurred while fetching the research paper'
-        });
+      console.error('Error fetching research papers:', error);
+      return res.status(500).json({
+        error: 'An error occurred while fetching research papers',
+      });
     }
-};
+  };
+  
+
+
+
+  export const fetchResearchByid = async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      const researchPaper = await db.ResearchPaper.findByPk(id);
+  
+      if (!researchPaper) {
+        return res.status(404).json({
+          error: 'Research paper not found',
+        });
+      }
+  
+      const paperObj = researchPaper.toJSON();
+  
+      for (const key in paperObj) {
+        if (typeof paperObj[key] === 'string') {
+          const value = paperObj[key].trim();
+          if (
+            (value.startsWith('{') && value.endsWith('}')) ||
+            (value.startsWith('[') && value.endsWith(']'))
+          ) {
+            try {
+              paperObj[key] = JSON.parse(value);
+            } catch (err) {
+              // leave unchanged
+            }
+          }
+        }
+      }
+  
+      return res.status(200).json({
+        message: 'Research paper fetched successfully',
+        data: paperObj,
+      });
+    } catch (error) {
+      console.error('Error fetching research paper:', error);
+      return res.status(500).json({
+        error: 'An error occurred while fetching the research paper',
+      });
+    }
+  };
+  
 
 
 export const updateResearch = async (req, res) => {

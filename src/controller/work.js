@@ -50,21 +50,46 @@ export const addWork = async (req, res) => {
 
 export const fetchWork = async (req, res) => {
     try {
-        const workExperience = await db.WorkExperience.findAll({
-            attribute: ["title", "employmentType", "company", "startDate", "endDate", "description", "experience"]
-        });
-
-        return res.status(200).json({
-            message: 'Work Experience fetched successfully',
-            data: workExperience
-        });
+      const workExperienceRaw = await db.WorkExperience.findAll({
+        attributes: ["title", "employmentType", "company", "startDate", "endDate", "description", "experience"]
+      });
+  
+      // Normalize stringified JSON fields if any
+      const workExperience = workExperienceRaw.map((work) => {
+        const obj = work.toJSON();
+  
+        for (const key in obj) {
+          if (typeof obj[key] === 'string') {
+            const value = obj[key].trim();
+            if (
+              (value.startsWith('{') && value.endsWith('}')) ||
+              (value.startsWith('[') && value.endsWith(']'))
+            ) {
+              try {
+                obj[key] = JSON.parse(value);
+              } catch (err) {
+                // Leave value unchanged if parsing fails
+              }
+            }
+          }
+        }
+  
+        return obj;
+      });
+  
+      return res.status(200).json({
+        message: 'Work Experience fetched successfully',
+        data: workExperience
+      });
     } catch (error) {
-        console.error('Error fetching work experience:', error);
-        return res.status(500).json({
-            error: 'An error occurred while fetching work experience'
-        });
+      console.error('Error fetching work experience:', error);
+      return res.status(500).json({
+        error: 'An error occurred while fetching work experience'
+      });
     }
-}
+  }
+  
+
 
 
 

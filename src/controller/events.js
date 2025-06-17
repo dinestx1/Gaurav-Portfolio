@@ -34,11 +34,32 @@ export  const addEventActivity = async (req, res) => {
     }
   };
 
-
-  export  const getAllEventActivities = async (req, res) => {
+  export const getAllEventActivities = async (req, res) => {
     try {
-      const events = await db.eventandactivities.findAll({
+      const eventsRaw = await db.eventandactivities.findAll({
         order: [['date', 'DESC']]
+      });
+  
+      const events = eventsRaw.map((event) => {
+        const obj = event.toJSON();
+  
+        for (const key in obj) {
+          if (typeof obj[key] === 'string') {
+            const value = obj[key].trim();
+            if (
+              (value.startsWith('{') && value.endsWith('}')) ||
+              (value.startsWith('[') && value.endsWith(']'))
+            ) {
+              try {
+                obj[key] = JSON.parse(value);
+              } catch (err) {
+                // Ignore parse error, leave original value
+              }
+            }
+          }
+        }
+  
+        return obj;
       });
   
       return res.status(200).json({
@@ -50,7 +71,7 @@ export  const addEventActivity = async (req, res) => {
       return res.status(500).json({ message: "Failed to fetch events", error });
     }
   };
-
+  
 
 
 
