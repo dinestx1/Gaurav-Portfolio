@@ -1,9 +1,9 @@
-const { where } = require('sequelize');
-const db = require('../models');
-const crypto = require('crypto');
-const { updateResearch } = require('./researchPaper');
+import { where } from 'sequelize';
+import db from '../models/index.js';
+import { randomBytes } from 'crypto';
 
-const addWork = async (req, res) => {
+
+export const addWork = async (req, res) => {
     const {
         title,
         employmentType,
@@ -18,7 +18,7 @@ const addWork = async (req, res) => {
 
 
     try {
-        const workId = crypto.randomBytes(16).toString('hex');
+        const workId = randomBytes(16).toString('hex');
 
         const newWork = await db.WorkExperience.create({
             workExperienceId: workId,
@@ -48,7 +48,7 @@ const addWork = async (req, res) => {
 
 
 
-const fetchWork = async (req, res) => {
+export const fetchWork = async (req, res) => {
     try {
         const workExperience = await db.WorkExperience.findAll({
             attribute: ["title", "employmentType", "company", "startDate", "endDate", "description", "experience"]
@@ -68,7 +68,7 @@ const fetchWork = async (req, res) => {
 
 
 
-const updateWork = async (req, res) => {
+export const updateWork = async (req, res) => {
     try {
         const workId = req.params.workExperienceId;
         const {
@@ -124,5 +124,3 @@ const updateWork = async (req, res) => {
 
 
 
-
-module.exports = { addWork, fetchWork, updateWork };

@@ -1,11 +1,11 @@
 // auth.js
-const bcrypt = require('bcrypt');
-const db = require('../models');
-const crypto = require('crypto');
+import { compare, hash } from 'bcrypt';
+import db from '../models/index.js';
+import { randomBytes } from 'crypto';
 
 
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body || {};
 
   try {
@@ -17,7 +17,7 @@ const login = async (req, res) => {
       return res.status(401).json({ error: 'User not found' });
     }
 
-    const match = await bcrypt.compare(password, user.password);
+    const match = await compare(password, user.password);
     if (!match) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
@@ -32,13 +32,13 @@ const login = async (req, res) => {
 // Function to handle user registration
 
 
-const registration = async (req, res) => {
+export const registration = async (req, res) => {
   try {
     const { email, password, name, phone, bio, profile, address, linkedin } = req.body;
 
 
     // Generate admin_id
-    const adminId = crypto.randomBytes(20).toString('hex');
+    const adminId = randomBytes(20).toString('hex');
 
 
     // Validate required fields
@@ -64,7 +64,7 @@ const registration = async (req, res) => {
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await hash(password, 12);
 
     // Create new user
     const newUser = await db.Admin.create({
@@ -101,7 +101,7 @@ const registration = async (req, res) => {
 
 
 
-const updateAdmin = async (req, res) => {
+export const updateAdmin = async (req, res) => {
   const { email, updateEmail, name, phone, bio, profile, address, linkedin } = req.body;
 
   try {
@@ -136,4 +136,3 @@ const updateAdmin = async (req, res) => {
 };
 
 
-module.exports = { login, registration, updateAdmin };

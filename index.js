@@ -1,12 +1,13 @@
-const express = require('express');
-const routes = require('./src/routes');
-const cors =require('cors')
+import express, { json } from 'express';
+import routes from './src/routes.js';
+import cors from 'cors';
+import connectDB from './db.js'
+
 // Initialize Database Connection
-const connectDB = require('./db');
 
 // Initialize Express App
 const app = express();
-app.use(express.json());
+app.use(json());
 app.use(cors({
   origin:true,
   credentials:true,

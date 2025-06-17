@@ -1,13 +1,18 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const dbConfig = require('../config/db.config');
+import { Sequelize, DataTypes } from 'sequelize';
+import { DB, USER, PASSWORD, HOST, DIALECT } from '../config/db.config.js';
+import admin from './admin.js';
+import researchPaper from './researchPaper.js';
+import workExperience from './workExperience.js';
+import eventandactivities from './eventandactivities.js';
 
-const sequelize = new Sequelize(
-  dbConfig.DB,
-  dbConfig.USER,
-  dbConfig.PASSWORD,
+
+export const sequelize = new Sequelize(
+  DB,
+  USER,
+  PASSWORD,
   {
-    host: dbConfig.HOST,
-    dialect: dbConfig.DIALECT,
+    host: HOST,
+    dialect: DIALECT,
     logging: false,
   }
 );
@@ -17,11 +22,10 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 // Load models
-db.Admin = require('./admin')(sequelize, DataTypes);
-db.ResearchPaper = require('./researchPaper')(sequelize, DataTypes);
-db.WorkExperience = require('./workExperience')(sequelize, DataTypes);
-db.eventandactivities = require('./eventandactivities')(sequelize, DataTypes);
-
+db.Admin = admin(sequelize, DataTypes);
+db.ResearchPaper = researchPaper(sequelize, DataTypes);
+db.WorkExperience = workExperience(sequelize, DataTypes);
+db.eventandactivities = eventandactivities(sequelize, DataTypes);
 
 // Admin
 // Admin.hasOne(Admin, { foreignKey: 'adminId' });
@@ -55,4 +59,4 @@ db.WorkExperience.belongsTo(db.Admin, {
 
 
 
-module.exports = db;
+export default db;

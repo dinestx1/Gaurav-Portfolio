@@ -1,6 +1,6 @@
-const db = require('../models');
+import db from '../models/index.js';
 
-const addEventActivity = async (req, res) => {
+export  const addEventActivity = async (req, res) => {
     try {
       const {
         eventType,
@@ -35,7 +35,7 @@ const addEventActivity = async (req, res) => {
   };
 
 
-  const getAllEventActivities = async (req, res) => {
+  export  const getAllEventActivities = async (req, res) => {
     try {
       const events = await db.eventandactivities.findAll({
         order: [['date', 'DESC']]
@@ -55,5 +55,5 @@ const addEventActivity = async (req, res) => {
 
 
 
+ 
 
-  module.exports = { addEventActivity,getAllEventActivities};

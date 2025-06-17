@@ -1,6 +1,6 @@
-const { differenceInMonths } = require('date-fns');
+import { differenceInMonths } from 'date-fns';
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
     const WorkExperience = sequelize.define('WorkExperience', {
         workExperienceId: {
             type: DataTypes.STRING,

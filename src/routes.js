@@ -1,34 +1,34 @@
-const express = require('express');
-const authController = require('./controller/auth');
-const researchController = require('./controller/researchPaper');
-const workController = require('./controller/work');
-const eventcontroller =require('./controller/events')
-const router = express.Router();
+import { Router } from 'express';
+import { login, registration, updateAdmin } from './controller/auth.js';
+import { addResearch, fetchResearch, fetchResearchByid, updateResearch, deleteResearch } from './controller/researchPaper.js';
+import { addWork, fetchWork, updateWork } from './controller/work.js';
+import { addEventActivity, getAllEventActivities } from './controller/events.js';
+const router = Router();
 
-router.post('/auth/login', authController.login);
-router.post('/auth/register', authController.registration);
-router.post('/update-profile',authController.updateAdmin);
+router.post('/auth/login', login);
+router.post('/auth/register', registration);
+router.post('/update-profile',updateAdmin);
 
 
 // PROJECT
-router.post('/add-research-paper',researchController.addResearch);
-router.get('/fetch-research-paper', researchController.fetchResearch);
-router.get('/fetch-research-paper/:id', researchController.fetchResearchByid);
-router.post('/update-research/:researchId', researchController.updateResearch);
-router.delete('/delete-research/:researchId', researchController.deleteResearch);
+router.post('/add-research-paper',addResearch);
+router.get('/fetch-research-paper', fetchResearch);
+router.get('/fetch-research-paper/:id', fetchResearchByid);
+router.post('/update-research/:researchId', updateResearch);
+router.delete('/delete-research/:researchId', deleteResearch);
 
 
 
 // WORK
-router.post('/add-work', workController.addWork);
-router.get('/fetch-work', workController.fetchWork);
-router.post('/update-work/:workExperienceId', workController.updateWork);
+router.post('/add-work', addWork);
+router.get('/fetch-work', fetchWork);
+router.post('/update-work/:workExperienceId', updateWork);
 
 
 
 //event and activties
-router.post('/add-event', eventcontroller.addEventActivity);
-router.get('/fetch-event', eventcontroller.getAllEventActivities);
+router.post('/add-event', addEventActivity);
+router.get('/fetch-event', getAllEventActivities);
 
 
-module.exports = router;
+export default router;

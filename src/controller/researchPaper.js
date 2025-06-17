@@ -1,7 +1,7 @@
-const db = require('../models');
-const crypto = require('crypto');
+import db from '../models/index.js';
+import { randomBytes } from 'crypto';
 
-const addResearch = async (req, res) => {
+export const addResearch = async (req, res) => {
     try {
       const {
         title,
@@ -26,7 +26,7 @@ const addResearch = async (req, res) => {
       // Required fields check
      
   
-      const researchId = crypto.randomBytes(20).toString('hex');
+      const researchId = randomBytes(20).toString('hex');
   
       const newResearch = await db.ResearchPaper.create({
         paperId: researchId,
@@ -63,7 +63,7 @@ const addResearch = async (req, res) => {
   };
 
 
-  const fetchResearch = async (req, res) => {
+  export const fetchResearch = async (req, res) => {
     try {
         const researchPapers = await db.ResearchPaper.findAll();
 
@@ -81,7 +81,7 @@ const addResearch = async (req, res) => {
 
 
 
-const fetchResearchByid = async (req, res) => {
+export const fetchResearchByid = async (req, res) => {
     try {
         const { id } = req.params;
         
@@ -106,7 +106,7 @@ const fetchResearchByid = async (req, res) => {
 };
 
 
-const updateResearch = async (req, res) => {
+export const updateResearch = async (req, res) => {
     try {
         const researchPaperId = req.params.researchId;
 
@@ -154,7 +154,7 @@ const updateResearch = async (req, res) => {
 };
 
 
-const deleteResearch = async (req, res) => {
+export const deleteResearch = async (req, res) => {
     const researchPaperId = req.params.researchId;
 
     try {
@@ -176,4 +176,3 @@ const deleteResearch = async (req, res) => {
 };
 
 
-module.exports = { addResearch, fetchResearch,fetchResearchByid, updateResearch, deleteResearch};
