@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 app.use(json());
 app.use(cors({
-  origin:true,
+  origin: 'https://gourav.thegrowthvibes.com',
   credentials:true,
   exposedHeaders:["set-cookie"]
 }))
