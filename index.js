@@ -16,7 +16,10 @@ const PORT = process.env.PORT || 3000;
 
 
 app.use("/api/v0.1", routes);
+app.get("/",(req,res)=>{
+  res.send({status:"started"});
 
+})
 
 connectDB().then(() => {
   app.listen(PORT, () => {
