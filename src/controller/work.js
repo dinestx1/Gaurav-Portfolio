@@ -51,7 +51,7 @@ export const addWork = async (req, res) => {
 export const fetchWork = async (req, res) => {
     try {
       const workExperienceRaw = await db.WorkExperience.findAll({
-        attributes: ["title", "employmentType", "company", "startDate", "endDate", "description", "experience"]
+        attributes: ["title", "employmentType", "company", "startDate", "endDate", "description", "experience","keyMilestones"]
       });
   
       // Normalize stringified JSON fields if any
